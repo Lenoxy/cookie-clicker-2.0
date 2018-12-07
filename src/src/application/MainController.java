@@ -1,21 +1,32 @@
 package application;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
-public class MainController {
-	@FXML
-	private Label cookieLabel;
+public class MainController extends Application{
 	
-	public void cookie(ActionEvent event) {
-		CookieClicker.cookieCounter++;
-		if(CookieClicker.cookieCounter==1) {
-			cookieLabel.setText(CookieClicker.cookieCounter + " Cookie");
-		}else if(CookieClicker.cookieCounter>1) {
-			cookieLabel.setText(CookieClicker.cookieCounter + " Cookies");
+	public static int cookieCounter = 0;
+	
+		
+	public void main(String[] args) {
+		launch(args);
+	}
+
+
+	@Override
+	public void start(Stage primaryStage) throws Exception{
+		
+		Parent root = FXMLLoader.load(getClass().getResource("Window.fxml"));
+		Scene scene = new Scene(root);
+		primaryStage.setTitle("Cookie Clicker 2.0");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		
 		}
 		
-		
 	}
-}
+
+
