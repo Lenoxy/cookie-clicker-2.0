@@ -10,7 +10,12 @@ public class MainController {
 	
 	public void cookie(ActionEvent event) {
 		CookieClicker.cookieCounter++;
-		cookieLabel.setText(Integer.toString(CookieClicker.cookieCounter));
+		if(CookieClicker.cookieCounter==1) {
+			cookieLabel.setText(CookieClicker.cookieCounter + " Cookie");
+		}else if(CookieClicker.cookieCounter>1) {
+			cookieLabel.setText(CookieClicker.cookieCounter + " Cookies");
+		}
+		
 		
 	}
 }
