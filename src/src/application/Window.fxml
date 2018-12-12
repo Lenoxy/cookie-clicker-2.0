@@ -34,11 +34,11 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="178.0" text="Label" />
+                        <Label fx:id="oldovenCounter" alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="178.0" text="Label" />
                         <Button layoutX="14.0" layoutY="116.0" mnemonicParsing="false" onAction="#buyOldoven" text="Buy" />
                         <Button layoutX="138.0" layoutY="116.0" mnemonicParsing="false" onAction="#sellOldoven" text="Sell" />
-                        <Label layoutX="27.0" layoutY="99.0" text="Label" />
-                        <Label layoutX="151.0" layoutY="100.0" text="Label" />
+                        <Label fx:id="buyOvenLabel" layoutX="27.0" layoutY="99.0" text="Label" />
+                        <Label fx:id="sellOvenLabel" layoutX="151.0" layoutY="100.0" text="Label" />
                      </children>
                   </AnchorPane>
               </content>
@@ -47,11 +47,11 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label alignment="TOP_CENTER" layoutX="8.0" layoutY="14.0" prefHeight="18.0" prefWidth="189.0" text="Label" />
+                        <Label fx:id="ovenCounter" alignment="TOP_CENTER" layoutX="8.0" layoutY="14.0" prefHeight="18.0" prefWidth="189.0" text="Label" />
                         <Button layoutX="14.0" layoutY="116.0" mnemonicParsing="false" onAction="#buyOven" text="Buy" />
                         <Button layoutX="135.0" layoutY="116.0" mnemonicParsing="false" onAction="#sellOven" text="Sell" />
-                        <Label layoutX="27.0" layoutY="99.0" text="Label" />
-                        <Label layoutX="146.0" layoutY="99.0" text="Label" />
+                        <Label fx:id="buyOvenLabel" layoutX="27.0" layoutY="99.0" text="Label" />
+                        <Label fx:id="sellOvenLabel" layoutX="146.0" layoutY="99.0" text="Label" />
                      </children>
                   </AnchorPane>
               </content>
@@ -60,11 +60,11 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label alignment="TOP_CENTER" layoutX="7.0" layoutY="14.0" prefHeight="18.0" prefWidth="188.0" text="Label" />
+                        <Label fx:id="laserovenCounter" alignment="TOP_CENTER" layoutX="7.0" layoutY="14.0" prefHeight="18.0" prefWidth="188.0" text="Label" />
                         <Button layoutX="14.0" layoutY="116.0" mnemonicParsing="false" onAction="#buyLaseroven" text="Buy" />
                         <Button layoutX="141.0" layoutY="116.0" mnemonicParsing="false" onAction="#sellLaseroven" text="Sell" />
-                        <Label layoutX="27.0" layoutY="99.0" text="Label" />
-                        <Label layoutX="154.0" layoutY="100.0" text="Label" />
+                        <Label fx:id="buyLaserovenLabel" layoutX="27.0" layoutY="99.0" text="Label" />
+                        <Label fx:id="sellLaserovenLabel" layoutX="154.0" layoutY="100.0" text="Label" />
                      </children>
                   </AnchorPane>
               </content>
@@ -73,11 +73,11 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label alignment="TOP_CENTER" layoutX="8.0" layoutY="14.0" prefHeight="18.0" prefWidth="187.0" text="Label" />
-                        <Button layoutX="14.0" layoutY="119.0" mnemonicParsing="false" onAction="#buydOven" text="Buy" />
-                        <Button layoutX="137.0" layoutY="119.0" mnemonicParsing="false" onAction="#selldOven" text="Sell" />
-                        <Label layoutX="27.0" layoutY="102.0" text="Label" />
-                        <Label layoutX="150.0" layoutY="103.0" text="Label" />
+                        <Label fx:id="dovenCounter" alignment="TOP_CENTER" layoutX="8.0" layoutY="14.0" prefHeight="18.0" prefWidth="187.0" text="Label" />
+                        <Button layoutX="14.0" layoutY="119.0" mnemonicParsing="false" onAction="#buyDoven" text="Buy" />
+                        <Button layoutX="137.0" layoutY="119.0" mnemonicParsing="false" onAction="#sellDoven" text="Sell" />
+                        <Label fx:id="buyDovenLabel" layoutX="27.0" layoutY="102.0" text="Label" />
+                        <Label fx:id="sellDovenLabel" layoutX="150.0" layoutY="103.0" text="Label" />
                      </children>
                   </AnchorPane>
               </content>
@@ -86,11 +86,11 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label alignment="TOP_CENTER" layoutX="11.0" layoutY="14.0" prefHeight="18.0" prefWidth="184.0" text="Label" />
+                        <Label fx:id="ovenfactoryCounter" alignment="TOP_CENTER" layoutX="11.0" layoutY="14.0" prefHeight="18.0" prefWidth="184.0" text="Label" />
                         <Button layoutX="14.0" layoutY="119.0" mnemonicParsing="false" onAction="#buyOvenfactory" text="Buy" />
                         <Button layoutX="137.0" layoutY="119.0" mnemonicParsing="false" onAction="#sellOvenfactory" text="Sell" />
-                        <Label layoutX="27.0" layoutY="102.0" text="Label" />
-                        <Label layoutX="148.0" layoutY="102.0" text="Label" />
+                        <Label fx:id="buyOvenfactoryLabel" layoutX="27.0" layoutY="102.0" text="Label" />
+                        <Label fx:id="sellOvenfactoryLabel" layoutX="148.0" layoutY="102.0" text="Label" />
                      </children>
                   </AnchorPane>
               </content>
