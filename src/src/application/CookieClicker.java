@@ -10,8 +10,9 @@ import javafx.scene.Scene;
 
 public class CookieClicker extends Application{
 	
-	public static int Cookies = 0;
+	
 	public static int cookieCounter;
+	public static int addToCookieCounter = 1;
 	
 	public static void main(String[] args) {
 		launch(args);
