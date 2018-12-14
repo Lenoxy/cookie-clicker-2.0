@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="cookieLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <Button layoutX="26.0" layoutY="132.0" mnemonicParsing="false" onAction="#cookieTextfield" prefHeight="187.0" prefWidth="167.0" text="Cookie" />
+      <Button layoutX="14.0" layoutY="200.0" mnemonicParsing="false" onAction="#cookieTextfield" prefHeight="187.0" prefWidth="167.0" text="Cookie" />
       <Accordion layoutX="380.0" layoutY="10.0" prefHeight="378.0" prefWidth="206.0">
         <panes>
             <TitledPane animated="false" text="Microwave">
@@ -96,6 +96,11 @@
       <TextField fx:id="cookieTextfield" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="294.0" text="0 Cookies">
          <font>
             <Font size="28.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="cpsTextfield" editable="false" layoutX="14.0" layoutY="96.0" prefHeight="26.0" prefWidth="294.0" text="0 C/s">
+         <font>
+            <Font size="18.0" />
          </font>
       </TextField>
    </children>
