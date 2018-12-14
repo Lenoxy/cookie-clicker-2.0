@@ -26,6 +26,9 @@ public class MainController{
 	@FXML 
 	private TextField cookieTextfield = new TextField();
 	
+	@FXML
+	private TextField cpsTextfield = new TextField();
+	
 	@FXML 
 	private Label microwaveCounter;
 	@FXML 
@@ -127,37 +130,22 @@ public class MainController{
 		sellUpgrade(ovenfactoryObj, ovenfactoryCounter, buyOvenfactoryLabel, sellOvenfactoryLabel);
 	}
 	
+	
+	
 	void buyUpgrade(UpgradeObject obj, Label objectCounter, Label buyObjectLabel, Label sellObjectLabel) {
 		if(CookieClicker.cookieCounter >= obj.Price) {
 			CookieClicker.cookieCounter = CookieClicker.cookieCounter - obj.Price;
 			obj.Counter += 1;
 			setCookieCounter();
 			setLabel(objectCounter, obj.Counter, obj.Name);
-			obj.Price += 10;
+			obj.Price *= 1.3;
 			buyObjectLabel.setText(obj.Price + "");
 			sellObjectLabel.setText(obj.Price/4 + "");
 		}else {
-			showBuyError(obj.Name);
+			showError("Cookie", "buy");
 		}
 	}
-	
-	
-	double sellUpgradeOLD(double object, String name, double objectPrice, Label objectCounter, Label buyObjectLabel, Label sellObjectLabel) {
-		if(object>= 1) {
-			CookieClicker.cookieCounter = CookieClicker.cookieCounter + (objectPrice/4);
-			object = object - 1;
-			setCookieCounter();
-			setLabel(objectCounter, object, name);
-			objectPrice = objectPrice-10;
-			buyObjectLabel.setText(objectPrice + "");
-			sellObjectLabel.setText(objectPrice/4 + "");
-		}else {
-			showSellError(name);
-		}
 		
-		
-		return object;
-	}
 	void sellUpgrade(UpgradeObject obj, Label objectCounter, Label buyObjectLabel, Label sellObjectLabel) {
 		if(obj.Counter >= 1) {
 			CookieClicker.cookieCounter = CookieClicker.cookieCounter + (obj.Price/4);
@@ -168,7 +156,7 @@ public class MainController{
 			buyObjectLabel.setText(obj.Price + "");
 			sellObjectLabel.setText(obj.Price/4 + "");
 		}else {
-			showBuyError(obj.Name);
+			showError(obj.Name, "sell");
 		}
 	}
 	
@@ -177,20 +165,11 @@ public class MainController{
 		setTextfield(cookieTextfield, CookieClicker.cookieCounter, "Cookie" );
 	}
 	
-	void showBuyError(String message) {
+	void showError(String message, String verb) {
 		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Not enough cookies");
+		alert.setTitle("You can't buy this!");
 		alert.setHeaderText(null);
-		alert.setContentText("Sorry, you currently don't have enough cookies to buy this: " + message);
-
-		alert.showAndWait();
-	}
-	
-	void showSellError(String message) {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Not enough " + message + "s");
-		alert.setHeaderText(null);
-		alert.setContentText("Sorry, you currently don't have enough " + message + "s to sell this.");
+		alert.setContentText("Sorry, you don't have enough " + message + "s to " + verb + " this.");
 
 		alert.showAndWait();
 	}
@@ -219,36 +198,37 @@ public class MainController{
 	void initialize() {
 		
 		microwaveObj.Name = "Microwave";
-		microwaveObj.Price = 20;
+		microwaveObj.Price = 60;
 		
 		oldovenObj.Name = "Old Oven";
-		oldovenObj.Price = 30;
+		oldovenObj.Price = 400;
 		
 		ovenObj.Name = "Oven";
-		ovenObj.Price = 40;
+		ovenObj.Price = 3000;
 		
 		laserovenObj.Name = "Laseroven";
-		laserovenObj.Price = 50;
+		laserovenObj.Price = 20000;
 		
 		dovenObj.Name = "Fourdimensional Oven";
-		dovenObj.Price = 60;
+		dovenObj.Price = 100000;
 		
 		ovenfactoryObj.Name = "Ovenfactory";
-		ovenfactoryObj.Price = 70;
+		ovenfactoryObj.Price = 1000000;
 		
 	    timerTask = new TimerTask() {
 	        @Override
 	    	public void run(){
-			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + microwaveObj.Counter/40;
-			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + oldovenObj.Counter/20;
-			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + ovenObj.Counter/10;
-			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + laserovenObj.Counter*2;
-			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + dovenObj.Counter*20;
-			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + ovenfactoryObj.Counter*100;
-			       setCookieCounter();
+	        	double cps = 0;
+	        		cps  += microwaveObj.Counter/5 + oldovenObj.Counter/2 + laserovenObj.Counter*15 + dovenObj.Counter*40 + ovenfactoryObj.Counter*100; 
+			        
+	        		CookieClicker.cookieCounter += cps;
+	        		setCookieCounter();				
+	        		cpsTextfield.setText(cps + " Cps");
+				
+			     
 			    }
 	    };
-	    timer.schedule(timerTask, 0, 100);
+	    timer.schedule(timerTask, 0, 500);
 			
 			 
 
