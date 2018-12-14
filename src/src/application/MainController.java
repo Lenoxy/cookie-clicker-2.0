@@ -8,12 +8,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class MainController{
 	
+    Timer timer = new Timer();
+    TimerTask timerTask;
+	
+	
 	public double microwave = 0, oldoven = 0, oven = 0, laseroven = 0, doven = 0, ovenfactory = 0; 
 	
-	double microwavePrice = 10;
+	double microwavePrice = 20;
 	double oldovenPrice = 20;
 	double ovenPrice =  30;
 	double laserovenPrice = 40;
@@ -21,7 +26,7 @@ public class MainController{
 	double ovenfactoryPrice = 60;
 	
 	@FXML 
-	private Label cookieLabel;
+	private TextField cookieTextfield = new TextField();
 	
 	@FXML 
 	private Label microwaveCounter;
@@ -65,12 +70,10 @@ public class MainController{
 	@FXML
 	private Label sellOvenfactoryLabel;
 	
-	Timer timer = new Timer();
-    TimerTask timerTask;
 	
-	
-	public void cookie(ActionEvent event) {
-		cookieClick();
+	public void cookieTextfield(ActionEvent event) {
+		CookieClicker.cookieCounter = CookieClicker.cookieCounter + CookieClicker.addToCookieCounter;
+		setTextfield(cookieTextfield, CookieClicker.cookieCounter, "Cookie");
 	}
 	
 	
@@ -243,15 +246,9 @@ public class MainController{
 		}
 	}
 	
-
-
-	void cookieClick() {
-		CookieClicker.cookieCounter = CookieClicker.cookieCounter + CookieClicker.addToCookieCounter;
-		setCookieCounter();
-	}
 	
 	void setCookieCounter() {
-		setLabel(cookieLabel, (int)CookieClicker.cookieCounter, "Cookie");
+		setTextfield(cookieTextfield, CookieClicker.cookieCounter, "Cookie" );
 	}
 	
 	void showBuyError(String message) {
@@ -274,46 +271,42 @@ public class MainController{
 	
 	void setLabel(Label label, double number, String text) {
 		DecimalFormat format = new DecimalFormat("0.#");
-		
-		
+			
 		if(number != 1) {
 			label.setText(format.format(number) + " " + text + "s");
 		}else {
 			label.setText(format.format(number) + " " + text);
 		}
 	}
+	
+	void setTextfield(TextField field, double number, String text) {
+		DecimalFormat format = new DecimalFormat("0.#");
+			
+		if(number != 1) {
+			field.setText(format.format(number) + " " + text + "s");
+		}else {
+			field.setText(format.format(number) + " " + text);
+		}
+	}
 		
 	@FXML
 	void initialize() {
-		/*
+		
 	    timerTask = new TimerTask() {
-	        public void run(){
-			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + microwave;
-			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + oldoven*3;
+	        @Override
+	    	public void run(){
+			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + microwave/40;
+			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + oldoven/20;
+			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + oven/10;
+			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + laseroven*2;
+			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + doven*20;
+			       CookieClicker.cookieCounter = CookieClicker.cookieCounter + ovenfactory*100;
 			       setCookieCounter();
 			    }
 	    };
-	    timer.schedule(timerTask, 0, 1000);
+	    timer.schedule(timerTask, 0, 100);
 			
-	    
-			
-			class tick1 extends TimerTask {
-			    public void run() {
-			       
-			    	CookieClicker.cookieCounter = CookieClicker.cookieCounter + oven;
-			    	CookieClicker.cookieCounter = CookieClicker.cookieCounter + laseroven*10;
-			    	CookieClicker.cookieCounter = CookieClicker.cookieCounter + doven*25;
-			    	CookieClicker.cookieCounter = CookieClicker.cookieCounter + ovenfactory*100;
-			    	setCookieCounter();
-			    	
-			    }
-			}
-
-			Timer timer2 = new Timer();
-			timer2.schedule(new tick1(), 0, 1000);
-			*/
-		
-		
+			 
 
 
 		buyMicrowaveLabel.setText(microwavePrice + "");
