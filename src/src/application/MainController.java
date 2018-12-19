@@ -1,8 +1,16 @@
 package application;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -10,73 +18,55 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.*;
+import application.CookieClicker;
 
 public class MainController{
+	
+	double cookieCounter;
+	int addToCookieCounter = 1;
 	
     Timer timer = new Timer();
     TimerTask timerTask;
 	
-    UpgradeObject microwaveObj = new UpgradeObject();
+    public UpgradeObject microwaveObj = new UpgradeObject();
     UpgradeObject oldovenObj = new UpgradeObject();
     UpgradeObject ovenObj = new UpgradeObject();
     UpgradeObject laserovenObj = new UpgradeObject();
     UpgradeObject dovenObj = new UpgradeObject();
     UpgradeObject ovenfactoryObj = new UpgradeObject();
 	
-	@FXML 
-	private TextField cookieTextfield = new TextField();
+	@FXML private TextField cookieTextfield = new TextField();
 	
-	@FXML
-	private TextField cpsTextfield = new TextField();
+	@FXML private TextField cpsTextfield = new TextField();
 	
-	@FXML 
-	private Label microwaveCounter;
-	@FXML 
-	private Label buyMicrowaveLabel;
-	@FXML 
-	private Label sellMicrowaveLabel;
+	@FXML private Label microwaveCounter;
+	@FXML private Label buyMicrowaveLabel;
+	@FXML private Label sellMicrowaveLabel;
 	
-	@FXML
-	private Label oldovenCounter;
-	@FXML
-	private Label buyOldovenLabel;
-	@FXML
-	private Label sellOldovenLabel;
+	@FXML private Label oldovenCounter;
+	@FXML private Label buyOldovenLabel;
+	@FXML private Label sellOldovenLabel;
 
-	@FXML
-	private Label ovenCounter;
-	@FXML
-	private Label buyOvenLabel;
-	@FXML
-	private Label sellOvenLabel;
+	@FXML private Label ovenCounter;
+	@FXML private Label buyOvenLabel;
+	@FXML private Label sellOvenLabel;
 
-	@FXML
-	private Label laserovenCounter;
-	@FXML
-	private Label buyLaserovenLabel;
-	@FXML
-	private Label sellLaserovenLabel;
+	@FXML private Label laserovenCounter;
+	@FXML private Label buyLaserovenLabel;
+	@FXML private Label sellLaserovenLabel;
 
-	@FXML
-	private Label dovenCounter;
-	@FXML
-	private Label buyDovenLabel;
-	@FXML
-	private Label sellDovenLabel;
+	@FXML private Label dovenCounter;
+	@FXML private Label buyDovenLabel;
+	@FXML private Label sellDovenLabel;
 
-	@FXML
-	private Label ovenfactoryCounter;
-	@FXML
-	private Label buyOvenfactoryLabel;
-	@FXML
-	private Label sellOvenfactoryLabel;
-	
+	@FXML private Label ovenfactoryCounter;
+	@FXML private Label buyOvenfactoryLabel;
+	@FXML private Label sellOvenfactoryLabel;
 	
 	public void cookieTextfield(ActionEvent event) {
-		CookieClicker.cookieCounter = CookieClicker.cookieCounter + CookieClicker.addToCookieCounter;
-		setTextfield(cookieTextfield, CookieClicker.cookieCounter, "Cookie");
+		cookieCounter = cookieCounter +  addToCookieCounter;
+		setTextfield(cookieTextfield, cookieCounter, "Cookie");
 	}
-	
 	
 	
 	public void buyMicrowave(ActionEvent event) {		
@@ -85,12 +75,10 @@ public class MainController{
 	
 	public void sellMicrowave(ActionEvent event) {
 		sellUpgrade(microwaveObj, microwaveCounter, buyMicrowaveLabel, sellMicrowaveLabel);
-
 	}
 	
 	public void buyOldoven(ActionEvent event) {
 		buyUpgrade(oldovenObj, oldovenCounter, buyOldovenLabel, sellOldovenLabel);
-
 	}
 	
 	public void sellOldoven(ActionEvent event) {
@@ -111,7 +99,6 @@ public class MainController{
 	
 	public void sellLaseroven(ActionEvent event) {
 		sellUpgrade(laserovenObj, laserovenCounter, buyLaserovenLabel, sellLaserovenLabel);
-
 	}
 	
 	public void buyDoven(ActionEvent event) {
@@ -133,8 +120,8 @@ public class MainController{
 	
 	
 	void buyUpgrade(UpgradeObject obj, Label objectCounter, Label buyObjectLabel, Label sellObjectLabel) {
-		if(CookieClicker.cookieCounter >= obj.Price) {
-			CookieClicker.cookieCounter = CookieClicker.cookieCounter - obj.Price;
+		if( cookieCounter >= obj.Price) {
+			 cookieCounter =  cookieCounter - obj.Price;
 			obj.Counter += 1;
 			setCookieCounter();
 			setLabel(objectCounter, obj.Counter, obj.Name);
@@ -148,11 +135,11 @@ public class MainController{
 		
 	void sellUpgrade(UpgradeObject obj, Label objectCounter, Label buyObjectLabel, Label sellObjectLabel) {
 		if(obj.Counter >= 1) {
-			CookieClicker.cookieCounter = CookieClicker.cookieCounter + (obj.Price/4);
+			 cookieCounter =  cookieCounter + (obj.Price/4);
 			obj.Counter -= 1;
 			setCookieCounter();
 			setLabel(objectCounter, obj.Counter, obj.Name);
-			obj.Price -= 10;
+			obj.Price /= 1.3;
 			buyObjectLabel.setText(obj.Price + "");
 			sellObjectLabel.setText(obj.Price/4 + "");
 		}else {
@@ -162,7 +149,7 @@ public class MainController{
 	
 	
 	void setCookieCounter() {
-		setTextfield(cookieTextfield, CookieClicker.cookieCounter, "Cookie" );
+		setTextfield(cookieTextfield,  cookieCounter, "Cookie" );
 	}
 	
 	void showError(String message, String verb) {
@@ -170,7 +157,6 @@ public class MainController{
 		alert.setTitle("You can't buy this!");
 		alert.setHeaderText(null);
 		alert.setContentText("Sorry, you don't have enough " + message + "s to " + verb + " this.");
-
 		alert.showAndWait();
 	}
 	
@@ -186,7 +172,6 @@ public class MainController{
 	
 	void setTextfield(TextField field, double number, String text) {
 		DecimalFormat format = new DecimalFormat("0.#");
-			
 		if(number != 1) {
 			field.setText(format.format(number) + " " + text + "s");
 		}else {
@@ -219,19 +204,14 @@ public class MainController{
 	        @Override
 	    	public void run(){
 	        	double cps = 0;
-	        		cps  += microwaveObj.Counter/5 + oldovenObj.Counter/2 + laserovenObj.Counter*15 + dovenObj.Counter*40 + ovenfactoryObj.Counter*100; 
-			        
-	        		CookieClicker.cookieCounter += cps;
-	        		setCookieCounter();				
-	        		cpsTextfield.setText(cps + " Cps");
-				
-			     
-			    }
+	        	cps  += microwaveObj.Counter/4 + oldovenObj.Counter*1.5 + laserovenObj.Counter*15 + dovenObj.Counter*40 + ovenfactoryObj.Counter*100; 
+	        	cookieCounter += cps;
+	        	setCookieCounter();				
+	        	cpsTextfield.setText(cps*2 + " Cps");
+	        }
 	    };
+	    
 	    timer.schedule(timerTask, 0, 500);
-			
-			 
-
 
 		buyMicrowaveLabel.setText(microwaveObj.Price + "");
 		sellMicrowaveLabel.setText(microwaveObj.Price/4 + "");
@@ -249,13 +229,91 @@ public class MainController{
 		sellDovenLabel.setText(dovenObj.Price/4 + "");
 		
 		buyOvenfactoryLabel.setText(ovenfactoryObj.Price + "");
-		sellOvenfactoryLabel.setText(ovenfactoryObj.Price/4 + "");
+		sellOvenfactoryLabel.setText(ovenfactoryObj.Price/4 + "");	
+		
+		
+	
+	
+	
+	}
+	
+	
+//Menu SAVE
+	public void saveToFile(ActionEvent event) {
+		CookieClicker.saveToFile(this);
+	}
+	
+	public void loadSavefile(ActionEvent event) {
+		CookieClicker.readFromFile(this);
+	}
+
+	public void wipeSavefile(ActionEvent event) {
 		
 	}
 	
-}
-
-
-
 	
+//Menu SHARE
+	public void saveTo(ActionEvent event) {
+		
+	}
+	
+	public void loadFrom(ActionEvent event) {
+		
+	}
+	
+	
+	
+//Menu MISC
+	public void about(ActionEvent event) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("About");
+		alert.setHeaderText(null);
+		alert.setContentText("Cookie Clicker 2.0 by Leo Scherer");
+		alert.showAndWait();
+	}
+	
+	public void projectPage(ActionEvent event) throws IOException {
+		openWebpage("http://www.041er-blj.ch/projects/2018/cookieclicker2-0_(Leo_Scherer)/");
+	}
+	
+	public void githubPage(ActionEvent event) {
+		openWebpage("https://github.com/Lenoxy/cookie-clicker-2.0");
+	}	
 
+	public static void openWebpage(String urlString) {
+	    try {
+	        Desktop.getDesktop().browse(new URL(urlString).toURI());
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	void reloadLabel() {
+	
+		setTextfield(cookieTextfield, cookieCounter, "Cookie");
+		
+		setLabel(microwaveCounter, microwaveObj.Counter, "Microwave");
+		buyMicrowaveLabel.setText(microwaveObj.Price + "");
+		sellMicrowaveLabel.setText(microwaveObj.Price/4 + "");
+		
+		setLabel(oldovenCounter, oldovenObj.Counter, "Old oven");
+		buyOldovenLabel.setText(oldovenObj.Price + "");
+		sellOldovenLabel.setText(oldovenObj.Price/4 + "");
+		
+		setLabel(ovenCounter, ovenObj.Counter, "Oven");
+		buyOvenLabel.setText(ovenObj.Price + "");
+		sellOvenLabel.setText(ovenObj.Price/4 + "");
+		
+		setLabel(laserovenCounter, laserovenObj.Counter, "Laseroven");
+		buyLaserovenLabel.setText(laserovenObj.Price + "");
+		sellLaserovenLabel.setText(laserovenObj.Price/4 + "");
+		
+		setLabel(dovenCounter, dovenObj.Counter, "Fourdimensional Oven");
+		buyDovenLabel.setText(dovenObj.Price + "");
+		sellDovenLabel.setText(dovenObj.Price/4 + "");
+		
+		setLabel(ovenfactoryCounter, ovenfactoryObj.Counter, "Oven");
+		buyOvenfactoryLabel.setText(ovenfactoryObj.Price + "");
+		sellOvenfactoryLabel.setText(ovenfactoryObj.Price/4 + "");
+	}
+}
