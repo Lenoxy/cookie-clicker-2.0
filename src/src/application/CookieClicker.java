@@ -13,16 +13,17 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import application.MainController;
 
 
 public class CookieClicker extends Application{
 	
-	MainController mainController;
+	static MainController mainController;
 	
 	public static void main(String[] args) {
 		System.out.println("Application started");
-		//readFromFile();
+		//readFromFile(mainController);
 		launch(args);
 	
 	}
@@ -40,6 +41,7 @@ public class CookieClicker extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
+		primaryStage.getIcons().add(new Image("file:icon.png"));
 		System.out.println("Window loaded");
 		
 	
@@ -67,7 +69,7 @@ public class CookieClicker extends Application{
 		String fileName = "save.txt";
 		try {
 			PrintWriter outputStream = new PrintWriter(fileName);
-			outputStream.println(saveVersion); //SaveVersion noch fixen
+			outputStream.println(saveVersion);
 			outputStream.println(mainController.cookieCounter);
 			outputStream.println(mainController.microwaveObj.Counter);
 			outputStream.println(mainController.microwaveObj.Price);
@@ -124,11 +126,39 @@ public class CookieClicker extends Application{
 			System.out.println("File could not be read:");
 			e.printStackTrace();
 		}
+	
 	}
+
+
+	static void wipeSave(MainController mainController) {
+		saveVersion=1;
+		try {
+			PrintWriter outputStream = new PrintWriter("save.txt");
+			outputStream.println(saveVersion);
+			outputStream.println(0);
+			outputStream.println(0);
+			outputStream.println(60);
+			outputStream.println(0);
+			outputStream.println(400);
+			outputStream.println(0);
+			outputStream.println(3000);
+			outputStream.println(0);
+			outputStream.println(20000);
+			outputStream.println(0);
+			outputStream.println(100000);
+			outputStream.println(0);
+			outputStream.println(1000000);
+			outputStream.close();
+			System.out.println("File wiped");
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("File could not be wiped:");
+			e.printStackTrace();
+		}
+	}
+	
+	
 }
-
-
-
 
 
 

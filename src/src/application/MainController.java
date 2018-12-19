@@ -2,11 +2,7 @@ package application;
 
 import java.awt.Desktop;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -160,6 +156,14 @@ public class MainController{
 		alert.showAndWait();
 	}
 	
+	void showInformation(String title, String message) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
+	
 	void setLabel(Label label, double number, String text) {
 		DecimalFormat format = new DecimalFormat("0.#");
 			
@@ -204,7 +208,7 @@ public class MainController{
 	        @Override
 	    	public void run(){
 	        	double cps = 0;
-	        	cps  += microwaveObj.Counter/4 + oldovenObj.Counter*1.5 + laserovenObj.Counter*15 + dovenObj.Counter*40 + ovenfactoryObj.Counter*100; 
+	        	cps  += microwaveObj.Counter/4 + oldovenObj.Counter*2 + ovenObj.Counter*12 + laserovenObj.Counter*30 + dovenObj.Counter*100 + ovenfactoryObj.Counter*1000; 
 	        	cookieCounter += cps;
 	        	setCookieCounter();				
 	        	cpsTextfield.setText(cps*2 + " Cps");
@@ -241,14 +245,19 @@ public class MainController{
 //Menu SAVE
 	public void saveToFile(ActionEvent event) {
 		CookieClicker.saveToFile(this);
+		showInformation("Saved", "Game saved!");
 	}
 	
 	public void loadSavefile(ActionEvent event) {
 		CookieClicker.readFromFile(this);
+		reloadLabel();
+		showInformation("Loaded", "Game loaded!");
 	}
 
 	public void wipeSavefile(ActionEvent event) {
-		
+		CookieClicker.wipeSave(this);
+		reloadLabel();
+		showInformation("Wiped", "Savefile wiped!");
 	}
 	
 	
@@ -265,11 +274,7 @@ public class MainController{
 	
 //Menu MISC
 	public void about(ActionEvent event) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("About");
-		alert.setHeaderText(null);
-		alert.setContentText("Cookie Clicker 2.0 by Leo Scherer");
-		alert.showAndWait();
+		showInformation("About", "Cookie Clicker 2.0 by Leo Scherer");
 	}
 	
 	public void projectPage(ActionEvent event) throws IOException {
