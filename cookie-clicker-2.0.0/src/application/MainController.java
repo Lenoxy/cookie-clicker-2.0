@@ -26,7 +26,7 @@ public class MainController{
     Timer timer = new Timer();
     TimerTask timerTask;
 	
-    public UpgradeObject microwaveObj = new UpgradeObject();
+    UpgradeObject microwaveObj = new UpgradeObject();
     UpgradeObject oldovenObj = new UpgradeObject();
     UpgradeObject ovenObj = new UpgradeObject();
     UpgradeObject laserovenObj = new UpgradeObject();
@@ -117,7 +117,7 @@ public class MainController{
 	
 	
 	void buyUpgrade(UpgradeObject obj, Label objectCounter, Label buyObjectLabel, Label sellObjectLabel) {
-		DecimalFormat format = new DecimalFormat("0");
+		DecimalFormat format = new DecimalFormat("#");
 		if( cookieCounter >= obj.Price) {
 			 cookieCounter =  cookieCounter - obj.Price;
 			obj.Counter += 1;
@@ -212,6 +212,8 @@ public class MainController{
 		buyOldovenLabel.setText(oldovenObj.Price + "");
 		sellOldovenLabel.setText(oldovenObj.Price/4 + "");
 		
+		ovenObj.Name = "ablbu";
+		
 		buyOvenLabel.setText(ovenObj.Price + "");
 		sellOvenLabel.setText(ovenObj.Price/4 + "");
 		
@@ -224,9 +226,23 @@ public class MainController{
 		buyOvenfactoryLabel.setText(ovenfactoryObj.Price + "");
 		sellOvenfactoryLabel.setText(ovenfactoryObj.Price/4 + "");	
 		
+		microwaveObj.Name = "Microwave";
+		microwaveObj.Price = 60;
 		
-	
-	
+		oldovenObj.Name = "Old Oven";
+		oldovenObj.Price = 400;
+		
+		ovenObj.Name = "Oven";
+		ovenObj.Price = 3000;
+		
+		laserovenObj.Name = "Laseroven";
+		laserovenObj.Price = 20000;
+		
+		dovenObj.Name = "Fourdimensional Oven";
+		dovenObj.Price = 100000;
+		
+		ovenfactoryObj.Name = "Ovenfactory";
+		ovenfactoryObj.Price = 1000000;
 	
 	}
 	
