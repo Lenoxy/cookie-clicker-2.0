@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.*;
@@ -19,7 +21,7 @@ import application.CookieClicker;
 public class MainController{
 	
 	double cookieCounter;
-	int addToCookieCounter = 1;
+	int addToCookieCounter = 1000;
 	
     Timer timer = new Timer();
     TimerTask timerTask;
@@ -63,7 +65,6 @@ public class MainController{
 		cookieCounter = cookieCounter +  addToCookieCounter;
 		setTextfield(cookieTextfield, cookieCounter, "Cookie");
 	}
-	
 	
 	public void buyMicrowave(ActionEvent event) {		
 		buyUpgrade(microwaveObj, microwaveCounter, buyMicrowaveLabel, sellMicrowaveLabel);
@@ -116,28 +117,30 @@ public class MainController{
 	
 	
 	void buyUpgrade(UpgradeObject obj, Label objectCounter, Label buyObjectLabel, Label sellObjectLabel) {
+		DecimalFormat format = new DecimalFormat("0.0");
 		if( cookieCounter >= obj.Price) {
 			 cookieCounter =  cookieCounter - obj.Price;
 			obj.Counter += 1;
 			setCookieCounter();
 			setLabel(objectCounter, obj.Counter, obj.Name);
 			obj.Price *= 1.3;
-			buyObjectLabel.setText(obj.Price + "");
-			sellObjectLabel.setText(obj.Price/4 + "");
+			buyObjectLabel.setText(format.format(obj.Price) + "");
+			sellObjectLabel.setText(format.format(obj.Price/4) + "");
 		}else {
 			showError("Cookie", "buy");
 		}
 	}
 		
 	void sellUpgrade(UpgradeObject obj, Label objectCounter, Label buyObjectLabel, Label sellObjectLabel) {
+		DecimalFormat format = new DecimalFormat("0.0");
 		if(obj.Counter >= 1) {
 			 cookieCounter =  cookieCounter + (obj.Price/4);
 			obj.Counter -= 1;
 			setCookieCounter();
 			setLabel(objectCounter, obj.Counter, obj.Name);
 			obj.Price /= 1.3;
-			buyObjectLabel.setText(obj.Price + "");
-			sellObjectLabel.setText(obj.Price/4 + "");
+			buyObjectLabel.setText(format.format(obj.Price) + "");
+			sellObjectLabel.setText(format.format(obj.Price/4) + "");
 		}else {
 			showError(obj.Name, "sell");
 		}
@@ -163,6 +166,8 @@ public class MainController{
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
+	
+
 	
 	void setLabel(Label label, double number, String text) {
 		DecimalFormat format = new DecimalFormat("0.#");
@@ -256,14 +261,28 @@ public class MainController{
 
 	public void wipeSavefile(ActionEvent event) {
 		CookieClicker.wipeSave(this);
+		CookieClicker.readFromFile(this);
 		reloadLabel();
-		showInformation("Wiped", "Savefile wiped!");
+		
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText(null);
+		alert.setContentText("Do you really want to clear your save file?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			CookieClicker.wipeSave(this);
+			CookieClicker.readFromFile(this);
+			reloadLabel();
+			showInformation("File wiped!", "The save file was wiped successfully!");
+		} else {
+		}
 	}
 	
 	
 //Menu SHARE
 	public void saveTo(ActionEvent event) {
-		
+
 	}
 	
 	public void loadFrom(ActionEvent event) {

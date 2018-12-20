@@ -62,7 +62,7 @@ public class CookieClicker extends Application{
 			}
 		});
 	}
-	public static int saveVersion = 0;
+	public static int saveVersion = 1;
 	public static void saveToFile(MainController mainController){
 
 		saveVersion++;
@@ -131,7 +131,6 @@ public class CookieClicker extends Application{
 
 
 	static void wipeSave(MainController mainController) {
-		saveVersion=1;
 		try {
 			PrintWriter outputStream = new PrintWriter("save.txt");
 			outputStream.println(saveVersion);
@@ -155,11 +154,5 @@ public class CookieClicker extends Application{
 			System.out.println("File could not be wiped:");
 			e.printStackTrace();
 		}
-	}
-	
-	
+	}	
 }
-
-
-
-
