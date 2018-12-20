@@ -21,7 +21,7 @@ import application.CookieClicker;
 public class MainController{
 	
 	double cookieCounter;
-	int addToCookieCounter = 1000;
+	int addToCookieCounter = 1;
 	
     Timer timer = new Timer();
     TimerTask timerTask;
@@ -117,7 +117,7 @@ public class MainController{
 	
 	
 	void buyUpgrade(UpgradeObject obj, Label objectCounter, Label buyObjectLabel, Label sellObjectLabel) {
-		DecimalFormat format = new DecimalFormat("0.0");
+		DecimalFormat format = new DecimalFormat("0");
 		if( cookieCounter >= obj.Price) {
 			 cookieCounter =  cookieCounter - obj.Price;
 			obj.Counter += 1;
@@ -132,7 +132,7 @@ public class MainController{
 	}
 		
 	void sellUpgrade(UpgradeObject obj, Label objectCounter, Label buyObjectLabel, Label sellObjectLabel) {
-		DecimalFormat format = new DecimalFormat("0.0");
+		DecimalFormat format = new DecimalFormat("0");
 		if(obj.Counter >= 1) {
 			 cookieCounter =  cookieCounter + (obj.Price/4);
 			obj.Counter -= 1;
@@ -191,23 +191,7 @@ public class MainController{
 	@FXML
 	void initialize() {
 		
-		microwaveObj.Name = "Microwave";
-		microwaveObj.Price = 60;
-		
-		oldovenObj.Name = "Old Oven";
-		oldovenObj.Price = 400;
-		
-		ovenObj.Name = "Oven";
-		ovenObj.Price = 3000;
-		
-		laserovenObj.Name = "Laseroven";
-		laserovenObj.Price = 20000;
-		
-		dovenObj.Name = "Fourdimensional Oven";
-		dovenObj.Price = 100000;
-		
-		ovenfactoryObj.Name = "Ovenfactory";
-		ovenfactoryObj.Price = 1000000;
+	CookieClicker.readFromFile(this);
 		
 	    timerTask = new TimerTask() {
 	        @Override

@@ -23,7 +23,6 @@ public class CookieClicker extends Application{
 	
 	public static void main(String[] args) {
 		System.out.println("Application started");
-		//readFromFile(mainController);
 		launch(args);
 	
 	}
@@ -41,7 +40,7 @@ public class CookieClicker extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
-		primaryStage.getIcons().add(new Image("file:icon.png"));
+		primaryStage.getIcons().add(new Image("file:src/res/icon.png"));
 		System.out.println("Window loaded");
 		
 	
