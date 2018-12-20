@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import model.*;
 import application.CookieClicker;
 
@@ -61,9 +62,9 @@ public class MainController{
 	@FXML private Label buyOvenfactoryLabel;
 	@FXML private Label sellOvenfactoryLabel;
 	
-	public void cookieTextfield(ActionEvent event) {
-		cookieCounter = cookieCounter +  addToCookieCounter;
-		setTextfield(cookieTextfield, cookieCounter, "Cookie");
+	public void cookieClicked(ActionEvent event) {
+		cookieCounter +=  addToCookieCounter;
+		setTextfield(cookieTextfield, cookieCounter, "Cookie", "Cookies");
 	}
 	
 	public void buyMicrowave(ActionEvent event) {		
@@ -122,7 +123,7 @@ public class MainController{
 			 cookieCounter =  cookieCounter - obj.Price;
 			obj.Counter += 1;
 			setCookieCounter();
-			setLabel(objectCounter, obj.Counter, obj.Name);
+			setLabel(objectCounter, obj.Counter, obj.Name, obj.NameM);
 			obj.Price *= 1.3;
 			buyObjectLabel.setText(format.format(obj.Price) + "");
 			sellObjectLabel.setText(format.format(obj.Price/4) + "");
@@ -137,7 +138,7 @@ public class MainController{
 			 cookieCounter =  cookieCounter + (obj.Price/4);
 			obj.Counter -= 1;
 			setCookieCounter();
-			setLabel(objectCounter, obj.Counter, obj.Name);
+			setLabel(objectCounter, obj.Counter, obj.Name, obj.NameM);
 			obj.Price /= 1.3;
 			buyObjectLabel.setText(format.format(obj.Price) + "");
 			sellObjectLabel.setText(format.format(obj.Price/4) + "");
@@ -148,7 +149,7 @@ public class MainController{
 	
 	
 	void setCookieCounter() {
-		setTextfield(cookieTextfield,  cookieCounter, "Cookie" );
+		setTextfield(cookieTextfield,  cookieCounter, "Cookie", "Cookies" );
 	}
 	
 	void showError(String message, String verb) {
@@ -169,20 +170,20 @@ public class MainController{
 	
 
 	
-	void setLabel(Label label, double number, String text) {
+	void setLabel(Label label, double number, String text, String textM) {
 		DecimalFormat format = new DecimalFormat("0.#");
 			
 		if(number != 1) {
-			label.setText(format.format(number) + " " + text + "s");
+			label.setText(format.format(number) + " " + textM);
 		}else {
 			label.setText(format.format(number) + " " + text);
 		}
 	}
 	
-	void setTextfield(TextField field, double number, String text) {
+	void setTextfield(TextField field, double number, String text, String textM) {
 		DecimalFormat format = new DecimalFormat("0.#");
 		if(number != 1) {
-			field.setText(format.format(number) + " " + text + "s");
+			field.setText(format.format(number) + " " + textM);
 		}else {
 			field.setText(format.format(number) + " " + text);
 		}
@@ -191,7 +192,7 @@ public class MainController{
 	@FXML
 	void initialize() {
 		
-	CookieClicker.readFromFile(this);
+		CookieClicker.readFromFile(this);
 		
 	    timerTask = new TimerTask() {
 	        @Override
@@ -203,46 +204,49 @@ public class MainController{
 	        	cpsTextfield.setText(cps*2 + " Cps");
 	        }
 	    };
-	    
 	    timer.schedule(timerTask, 0, 500);
+	
+		microwaveObj.Name = "Microwave";
+		microwaveObj.NameM = "Microwaves";
 
+		oldovenObj.Name = "Old oven";
+		oldovenObj.NameM = "Old ovens";
+		
+		ovenObj.Name = "Oven";
+		ovenObj.NameM = "Ovens";
+		
+		laserovenObj.Name = "Laseroven";
+		laserovenObj.NameM = "Laserovens";
+		
+		dovenObj.Name = "Fourdimensional Oven";
+		dovenObj.NameM = "Fourdimensional Ovens";
+		
+		ovenfactoryObj.Name = "Ovenfactory";
+		ovenfactoryObj.NameM = "Ovenfactories";
+		
+		setLabel(microwaveCounter, microwaveObj.Counter, microwaveObj.Name, microwaveObj.NameM);
 		buyMicrowaveLabel.setText(microwaveObj.Price + "");
 		sellMicrowaveLabel.setText(microwaveObj.Price/4 + "");
 		
+		setLabel(oldovenCounter, oldovenObj.Counter, oldovenObj.Name, oldovenObj.NameM);
 		buyOldovenLabel.setText(oldovenObj.Price + "");
 		sellOldovenLabel.setText(oldovenObj.Price/4 + "");
 		
-		ovenObj.Name = "ablbu";
-		
+		setLabel(ovenCounter, ovenObj.Counter, ovenObj.Name, ovenObj.NameM);
 		buyOvenLabel.setText(ovenObj.Price + "");
 		sellOvenLabel.setText(ovenObj.Price/4 + "");
 		
+		setLabel(laserovenCounter, laserovenObj.Counter, laserovenObj.Name, laserovenObj.NameM);
 		buyLaserovenLabel.setText(laserovenObj.Price + "");
 		sellLaserovenLabel.setText(laserovenObj.Price/4 + "");
 		
+		setLabel(dovenCounter, dovenObj.Counter, dovenObj.Name, dovenObj.NameM);
 		buyDovenLabel.setText(dovenObj.Price + "");
 		sellDovenLabel.setText(dovenObj.Price/4 + "");
 		
+		setLabel(ovenfactoryCounter, ovenfactoryObj.Counter, ovenfactoryObj.Name, ovenfactoryObj.NameM);
 		buyOvenfactoryLabel.setText(ovenfactoryObj.Price + "");
 		sellOvenfactoryLabel.setText(ovenfactoryObj.Price/4 + "");	
-		
-		microwaveObj.Name = "Microwave";
-		microwaveObj.Price = 60;
-		
-		oldovenObj.Name = "Old Oven";
-		oldovenObj.Price = 400;
-		
-		ovenObj.Name = "Oven";
-		ovenObj.Price = 3000;
-		
-		laserovenObj.Name = "Laseroven";
-		laserovenObj.Price = 20000;
-		
-		dovenObj.Name = "Fourdimensional Oven";
-		dovenObj.Price = 100000;
-		
-		ovenfactoryObj.Name = "Ovenfactory";
-		ovenfactoryObj.Price = 1000000;
 	
 	}
 	
@@ -260,10 +264,6 @@ public class MainController{
 	}
 
 	public void wipeSavefile(ActionEvent event) {
-		CookieClicker.wipeSave(this);
-		CookieClicker.readFromFile(this);
-		reloadLabel();
-		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");
 		alert.setHeaderText(null);
@@ -278,22 +278,27 @@ public class MainController{
 		} else {
 		}
 	}
-	
-	
-//Menu SHARE
-	public void saveTo(ActionEvent event) {
-
+//Menu Leaderboard
+	public void saveToLeaderboard(ActionEvent event) { 
+		TextInputDialog dialog = new TextInputDialog("Name");
+		dialog.setTitle("Leaderboard");
+		dialog.setHeaderText(null);
+		dialog.setContentText("Please enter your name:");
+		Optional<String> result = dialog.showAndWait();
+		SqlController.connect(); 
+		
 	}
 	
-	public void loadFrom(ActionEvent event) {
+	public void viewLeaderboard(ActionEvent event) {
 		
 	}
 	
 	
 	
+		
 //Menu MISC
 	public void about(ActionEvent event) {
-		showInformation("About", "Cookie Clicker 2.0 by Leo Scherer");
+		showInformation("About", "Cookie Clicker 2.0 (Version 3) by Leo Scherer");
 	}
 	
 	public void projectPage(ActionEvent event) throws IOException {
@@ -314,29 +319,29 @@ public class MainController{
 	
 	void reloadLabel() {
 	
-		setTextfield(cookieTextfield, cookieCounter, "Cookie");
+		setTextfield(cookieTextfield, cookieCounter, "Cookie", "Cookies");
 		
-		setLabel(microwaveCounter, microwaveObj.Counter, "Microwave");
+		setLabel(microwaveCounter, microwaveObj.Counter, microwaveObj.Name, microwaveObj.NameM);
 		buyMicrowaveLabel.setText(microwaveObj.Price + "");
 		sellMicrowaveLabel.setText(microwaveObj.Price/4 + "");
 		
-		setLabel(oldovenCounter, oldovenObj.Counter, "Old oven");
+		setLabel(oldovenCounter, oldovenObj.Counter, oldovenObj.Name, oldovenObj.NameM);
 		buyOldovenLabel.setText(oldovenObj.Price + "");
 		sellOldovenLabel.setText(oldovenObj.Price/4 + "");
 		
-		setLabel(ovenCounter, ovenObj.Counter, "Oven");
+		setLabel(ovenCounter, ovenObj.Counter, ovenObj.Name, ovenObj.NameM);
 		buyOvenLabel.setText(ovenObj.Price + "");
 		sellOvenLabel.setText(ovenObj.Price/4 + "");
 		
-		setLabel(laserovenCounter, laserovenObj.Counter, "Laseroven");
+		setLabel(laserovenCounter, laserovenObj.Counter, laserovenObj.Name, laserovenObj.NameM);
 		buyLaserovenLabel.setText(laserovenObj.Price + "");
 		sellLaserovenLabel.setText(laserovenObj.Price/4 + "");
 		
-		setLabel(dovenCounter, dovenObj.Counter, "Fourdimensional Oven");
+		setLabel(dovenCounter, dovenObj.Counter, dovenObj.Name, dovenObj.NameM);
 		buyDovenLabel.setText(dovenObj.Price + "");
 		sellDovenLabel.setText(dovenObj.Price/4 + "");
 		
-		setLabel(ovenfactoryCounter, ovenfactoryObj.Counter, "Oven");
+		setLabel(ovenfactoryCounter, ovenfactoryObj.Counter, ovenfactoryObj.Name, ovenfactoryObj.NameM);
 		buyOvenfactoryLabel.setText(ovenfactoryObj.Price + "");
 		sellOvenfactoryLabel.setText(ovenfactoryObj.Price/4 + "");
 	}
