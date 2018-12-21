@@ -12,10 +12,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.ImageView;
 import model.*;
 import application.CookieClicker;
 
@@ -284,9 +286,25 @@ public class MainController{
 		dialog.setTitle("Leaderboard");
 		dialog.setHeaderText(null);
 		dialog.setContentText("Please enter your name:");
-		Optional<String> result = dialog.showAndWait();
-		SqlController.connect(); 
 		
+		try {	
+			Optional<String> result = dialog.showAndWait();
+			String nameOfPlayer = "?";
+			if (result.isPresent()) {
+				nameOfPlayer = result.get();
+				SqlController.connect(); 
+				boolean insertComplete = SqlController.insert(nameOfPlayer, cookieCounter);
+				if(insertComplete == true) {
+					showInformation("Data inserted!", "Your data was uploaded successfully!");
+				}else {
+					showInformation("Data could not be inserted", "Check your connection");
+				}
+			}else {
+				showInformation("Mr. Noname", "You have to enter a name!");
+			}
+		}catch(Exception e){
+			System.out.println("Cast Error + " + e);
+		}	
 	}
 	
 	public void viewLeaderboard(ActionEvent event) {
