@@ -12,12 +12,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.ImageView;
 import model.*;
 import application.CookieClicker;
 
@@ -308,7 +306,8 @@ public class MainController{
 	}
 	
 	public void viewLeaderboard(ActionEvent event) {
-		
+		openWebpage(SQL.HRwebpage);
+
 	}
 	
 	

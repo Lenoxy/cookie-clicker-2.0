@@ -65,7 +65,7 @@ public class CookieClicker extends Application{
 	public static void saveToFile(MainController mainController){
 
 		saveVersion++;
-		String fileName = "save.txt";
+		String fileName = "src/save.txt";
 		try {
 			PrintWriter outputStream = new PrintWriter(fileName);
 			outputStream.println(saveVersion);
@@ -98,7 +98,7 @@ public class CookieClicker extends Application{
 		
 		try {
 		Scanner sc;
-		sc = new Scanner(new File ("save.txt"));
+		sc = new Scanner(new File ("src/save.txt"));
 			saveVersion++;
 			
 			saveVersion = sc.nextInt();
@@ -131,7 +131,7 @@ public class CookieClicker extends Application{
 
 	static void wipeSave(MainController mainController) {
 		try {
-			PrintWriter outputStream = new PrintWriter("save.txt");
+			PrintWriter outputStream = new PrintWriter("src/save.txt");
 			outputStream.println(saveVersion);
 			outputStream.println(0);
 			outputStream.println(0);
