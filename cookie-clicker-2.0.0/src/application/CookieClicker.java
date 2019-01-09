@@ -2,6 +2,7 @@ package application;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -28,6 +29,7 @@ public class CookieClicker extends Application{
 	}
 	
 	@Override
+	//Methode lädt das Fenster
 	public void start(Stage primaryStage) throws Exception{
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Window.fxml"));
@@ -43,10 +45,7 @@ public class CookieClicker extends Application{
 		primaryStage.getIcons().add(new Image("file:src/res/icon.png"));
 		System.out.println("Window loaded");
 		
-	
-		
-		
-	
+		//Autospeicherung, wenn das Programm geschlossen wird.
 		primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
@@ -61,11 +60,12 @@ public class CookieClicker extends Application{
 			}
 		});
 	}
+	//Gernerelle Methode, um den Spielstand in das Savefile einzufügen.
 	public static int saveVersion = 1;
 	public static void saveToFile(MainController mainController){
 
 		saveVersion++;
-		String fileName = "src/save.txt";
+		String fileName = "save.txt";
 		try {
 			PrintWriter outputStream = new PrintWriter(fileName);
 			outputStream.println(saveVersion);
@@ -88,17 +88,17 @@ public class CookieClicker extends Application{
 			System.out.println("File saved");
 			
 		} catch (FileNotFoundException e) {
-			System.out.println("File could not be saved:");
-			e.printStackTrace();
+			System.out.println("///File could not be saved: " + e);
 		}
 	}
 	
+	//Generelle Methode, um die Version des Savefiles einzulesen und alles zu aktualisieren.
 	public static void readFromFile(MainController mainController) {
 
 		
 		try {
 		Scanner sc;
-		sc = new Scanner(new File ("src/save.txt"));
+		sc = new Scanner(new File ("save.txt"));
 			saveVersion++;
 			
 			saveVersion = sc.nextInt();
@@ -122,16 +122,15 @@ public class CookieClicker extends Application{
 			System.out.println("File read");
 		}catch(Exception e) {
 			
-			System.out.println("File could not be read:");
-			e.printStackTrace();
+			System.out.println("///File could not be read: " + e);
 		}
 	
 	}
 
-
-	static void wipeSave(MainController mainController) {
+	//Methode schreibt die Standardwerte in das Savefile.
+	static void resetSave(MainController mainController) {
 		try {
-			PrintWriter outputStream = new PrintWriter("src/save.txt");
+			PrintWriter outputStream = new PrintWriter("save.txt");
 			outputStream.println(saveVersion);
 			outputStream.println(0);
 			outputStream.println(0);
@@ -150,8 +149,25 @@ public class CookieClicker extends Application{
 			System.out.println("File wiped");
 			
 		} catch (FileNotFoundException e) {
-			System.out.println("File could not be wiped:");
-			e.printStackTrace();
+			System.out.println("///File could not be wiped: " + e);
 		}
 	}	
+	
+	//Ueberpruefen, ob save.txt bereits exisitiert. Falls nicht, wird dieses File generiert.
+	static void checkForFile() {
+		File f = new File("save.txt");
+		if(f.exists() && !f.isDirectory()) { 
+		    System.out.println("File exists");
+		}else{
+			System.out.println("///File does not exist");
+			try {
+				f.createNewFile();
+				resetSave(mainController);
+				System.out.println("File created");
+			} catch (IOException e) {
+				System.out.println("///File could not be created: ");
+			}
+			
+		}
+	}
 }
