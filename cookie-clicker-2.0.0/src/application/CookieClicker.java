@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Scanner;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -21,6 +22,12 @@ import application.MainController;
 public class CookieClicker extends Application{
 	
 	static MainController mainController;
+	
+	public static File folder = new File(System.getenv("APPDATA") + "\\cookieclicker");
+	public static File file = new File (System.getenv("APPDATA") + "\\cookieclicker\\save.txt");
+	
+	public static String folderS = (System.getenv("APPDATA") + "\\cookieclicker");
+	public static String fileS = (System.getenv("APPDATA") + "\\cookieclicker\\save.txt");
 	
 	public static void main(String[] args) {
 		System.out.println("Application started");
@@ -65,9 +72,8 @@ public class CookieClicker extends Application{
 	public static void saveToFile(MainController mainController){
 
 		saveVersion++;
-		String fileName = "save.txt";
 		try {
-			PrintWriter outputStream = new PrintWriter(fileName);
+			PrintWriter outputStream = new PrintWriter(file);
 			outputStream.println(saveVersion);
 			outputStream.println(mainController.cookieCounter);
 			outputStream.println(mainController.microwaveObj.Counter);
@@ -85,20 +91,21 @@ public class CookieClicker extends Application{
 			
 			
 			outputStream.close();
-			System.out.println("File saved");
+			System.out.println("File saved in " + file);
 			
 		} catch (FileNotFoundException e) {
-			System.out.println("///File could not be saved: " + e);
+			System.out.println("///File could not be saved in " + file + " Error: " + e);
 		}
 	}
 	
 	//Generelle Methode, um die Version des Savefiles einzulesen und alles zu aktualisieren.
 	public static void readFromFile(MainController mainController) {
 
-		
+		//
+		//
 		try {
 		Scanner sc;
-		sc = new Scanner(new File ("save.txt"));
+		sc = new Scanner(new File (fileS));
 			saveVersion++;
 			
 			saveVersion = sc.nextInt();
@@ -119,10 +126,10 @@ public class CookieClicker extends Application{
 			
 			mainController.reloadLabel();
 			
-			System.out.println("File read");
+			System.out.println("File read in " + file);
 		}catch(Exception e) {
 			
-			System.out.println("///File could not be read: " + e);
+			System.out.println("///File in " + file + " could not be read: " + e);
 		}
 	
 	}
@@ -130,7 +137,7 @@ public class CookieClicker extends Application{
 	//Methode schreibt die Standardwerte in das Savefile.
 	static void resetSave(MainController mainController) {
 		try {
-			PrintWriter outputStream = new PrintWriter("save.txt");
+			PrintWriter outputStream = new PrintWriter(file);
 			outputStream.println(saveVersion);
 			outputStream.println(0);
 			outputStream.println(0);
@@ -146,28 +153,31 @@ public class CookieClicker extends Application{
 			outputStream.println(0);
 			outputStream.println(1000000);
 			outputStream.close();
-			System.out.println("File wiped");
+			System.out.println("File wiped in " + file);
 			
 		} catch (FileNotFoundException e) {
-			System.out.println("///File could not be wiped: " + e);
+			System.out.println("///File in " + file + " could not be wiped: " + e);
 		}
 	}	
 	
 	//Ueberpruefen, ob save.txt bereits exisitiert. Falls nicht, wird dieses File generiert.
 	static void checkForFile() {
-		File f = new File("save.txt");
-		if(f.exists() && !f.isDirectory()) { 
-		    System.out.println("File exists");
-		}else{
-			System.out.println("///File does not exist");
-			try {
-				f.createNewFile();
+		if(folder.exists()) {
+			System.out.println("Folder found: " + folder);
+			if(file.exists()) { 
+			    System.out.println("File found: " + file); 
+			}else {
+				System.out.println("///File could not be found in: " + folder);
 				resetSave(mainController);
-				System.out.println("File created");
-			} catch (IOException e) {
-				System.out.println("///File could not be created: ");
+				System.out.println("New savefile created:" + file);	
 			}
-			
+		}else {
+			System.out.println("///Folder could not be found in: " + folder);
+			new File(folderS).mkdirs();
+				System.out.println("New folder created: " + folder);
+				System.out.println("///File could not be found in: " + folder);
+				resetSave(mainController);
+				System.out.println("New file created: " + file);
 		}
 	}
 }

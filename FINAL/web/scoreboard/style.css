@@ -1,0 +1,11 @@
+table{
+    font-size: 22px;
+}
+
+th{
+    width: 150px;
+    text-align: left;
+}
+#header{
+    font-weight: bold;
+}
