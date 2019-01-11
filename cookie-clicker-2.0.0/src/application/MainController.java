@@ -334,7 +334,7 @@ public class MainController{
 //Menu MISC
 	//Methode oeffnet ein Dialog mit den Informationen des Programmes.
 	public void about(ActionEvent event) {
-		showInformation("About", "Cookie Clicker 2.0 (Version 7.1) by Leo Scherer");
+		showInformation("About", "Cookie Clicker 2.0 (Version 8.0) by Leo Scherer");
 	}
 	
 	//Methode oeffnet die Projektseite des Basislehrjahres im Standardbrowser
