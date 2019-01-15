@@ -11,13 +11,12 @@ public class SqlController{
 			Class.forName(SQL.driver);
 			Connection conn = DriverManager.getConnection(SQL.host, SQL.user, SQL.password);
 			System.out.println("SQL connection established!");
-			
 			return conn;
 		} catch (Exception e) {
 			System.out.println("///SQL Connection failed: " + e);
-			e.printStackTrace();
+			return null;
 		}
-		return null;
+
 	}
 	
 	//Methode fügt Daten in die Datenbank ein.
@@ -29,7 +28,7 @@ public class SqlController{
 			PreparedStatement  posted = conn.prepareStatement("INSERT INTO board (name, score) VALUES('"+ name +"', " + format.format(score) + ")");
 			posted.executeUpdate();	
 			successful = true;
-			System.out.println("Insert successful!");
+			System.out.println("Insert successful to " + SQL.host);
 		}catch(Exception e) {
 			System.out.println("///Insert not successful!: " + e);
 			successful = false;
