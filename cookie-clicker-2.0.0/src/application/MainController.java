@@ -339,7 +339,7 @@ public class MainController{
 	
 	//Methode oeffnet die Projektseite des Basislehrjahres im Standardbrowser
 	public void projectPage(ActionEvent event) throws IOException {
-		openWebpage("http://www.041er-blj.ch/projects/2018/cookieclicker2-0_(Leo_Scherer)/");
+		openWebpage("http://www.041er-blj.ch/projects/2018/cookie_clicker_(Leo_Scherer)");
 	}
 	
 	//Methode oeffnet die Github-Page im Standardbrowser

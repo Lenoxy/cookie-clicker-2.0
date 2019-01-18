@@ -2,10 +2,7 @@ package application;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Scanner;
 import javafx.application.Application;
 import javafx.application.Platform;
